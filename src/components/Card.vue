@@ -1,8 +1,12 @@
 <template>
     <div class="card">
         <div>
-          {{a}}
+          {{ a }}
           <button @click="clickHandler">++</button>
+        </div>
+         <div>
+          {{ a }}
+          <button @click="clickGlobalHandler">++global</button>
         </div>
         <div class="title">
             {{ title }}
@@ -14,23 +18,30 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, reactive, toRefs } from 'vue';
 
 export default defineComponent({
   props: {
     title: { type: String, default: ' ' },
     body: { type: String, default: ' ' },
   },
-  setup() {
-    const a = ref(0);
+  setup(props, { emit }) {
+    const state = reactive({
+      a: 0,
+      b: 0,
+      c: 0,
+    });
 
     const clickHandler = () => {
-      console.log(a.value);
-      a.value++;
+      state.a++;
+    };
+    const clickGlobalHandler = () => {
+      emit('plus-plus', 1);
     };
     return {
-      a,
+      ...toRefs(state),
       clickHandler,
+      clickGlobalHandler,
     };
   },
 });
