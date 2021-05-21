@@ -1,7 +1,8 @@
 <template>
   <div id="nav">
     <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link to="/about">Sobre nós</router-link> |
+     <router-link to="/novo">Meu carrinho</router-link>
   </div>
   <router-view/>
 </template>
@@ -16,6 +17,8 @@
 }
 
 #nav {
+  display: flex;
+  justify-content: flex-end;
   padding: 30px;
 
   a {
