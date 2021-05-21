@@ -1,18 +1,26 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    Componente home.vue
+    <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+      <card title="Produto 1" body="Novo card"/>
+      <card title="Produto 2" body="Novo card"/>
+      <card title="Produto 3" body="Novo card"/>
+      <card title="Produto 4" body="Novo card"/>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+
+import Card from '@/components/Card.vue';
 
 export default defineComponent({
-  name: 'Home',
   components: {
-    HelloWorld,
+    Card,
   },
 });
 </script>
+<style scoped>
+
+</style>
