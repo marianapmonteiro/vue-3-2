@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { reactive, readonly } from 'vue';
 
 interface AuthState {
@@ -22,7 +23,7 @@ const state: AuthState = reactive({
     id: '',
     username: '',
     password: '',
-    token: ''
+    token: 'teste',
 });
 
 const mutations = {
@@ -38,9 +39,9 @@ const mutations = {
         state.token = '';
         state.id = '';
         state.username = '';
-
         return true;
-    }
+    },
+
 };
 
 const actions = {
@@ -49,14 +50,17 @@ const actions = {
 
         mutations.login('id', username, 'superToken');
 
+        axios.get('https://jsonplaceholder.typicode.com/users').then((res) => {
+            console.log('res', res);
+        });
         return true;
-    }
+    },
 };
 
 export default function useAuth(): Readonly<useAuth> {
     return readonly({
         state,
         mutations,
-        actions
+        actions,
     });
 }

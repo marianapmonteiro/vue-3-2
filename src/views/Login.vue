@@ -1,21 +1,23 @@
 <template>
-  <div>
+<div class="container">
+  <div class="login">
     <div style="margin: 10px;">Usuario:</div>
-    <input ref="user" v-model="username" style="border-radius:30px; padding:10px"
+    <input class="input"  ref="user" v-model="username" style="border-radius:30px; padding:10px"
      type="text" @keyup="userHandler"/>
     <div style="margin: 10px;">Senha:</div>
-    <input ref="pass" v-model="password" style="border-radius:30px; padding:10px;"
+    <input class="input" ref="pass" v-model="password" style="border-radius:30px; padding:10px;"
     type="password" @keyup="passHandler"/>
     <div style="margin: 10px;">
       <button @click="login" style=" height: 30px; border-radius: 30px;">Entrar</button>
     </div>
   </div>
+</div>
 </template>
 
 <script lang="ts">
 import useAuth from '@/modules/auth';
 import {
-  defineComponent, reactive, Ref, ref, toRefs
+  defineComponent, reactive, Ref, ref, toRefs,
   } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -24,7 +26,7 @@ export default defineComponent({
     const auth = useAuth();
     const state = reactive({
       username: '',
-      password: ''
+      password: '',
     });
      const router = useRouter();
      const user: Ref<HTMLElement|null> = ref(null);
@@ -56,11 +58,40 @@ export default defineComponent({
       userHandler,
       user,
       pass,
-      passHandler
+      passHandler,
     };
-  }
+  },
 });
 </script>
-
 <style scoped>
+.login{
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+
+}
+.input {
+     padding: 5px;
+     font-size: 16px;
+     border-width: 1px;
+     border-color: #CCCCCC;
+     background-color: #FFFFFF;
+     color: #000000;
+     border-style: solid;
+     border-radius: 21px;
+     box-shadow: 0px 0px 5px rgba(66,66,66,.75);
+     text-shadow: 0px 0px 5px rgba(66,66,66,.75);
+
+}
+.input:focus{
+  outline: none;
+}
 </style>
