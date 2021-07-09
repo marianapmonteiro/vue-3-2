@@ -1,41 +1,52 @@
 <template>
   <div class="home">
-    Componente home.vue
-    <div>A :{{ a }}</div>
-    <div style="display: flex; flex-wrap: wrap; justify-content: center;">
-      <card title="Produto 1" body="Novo card" @plus-plus="plusHandler"/>
-      <card title="Produto 2" body="Novo card" @plus-plus="plusHandler"/>
-      <card title="Produto 3" body="Novo card" @plus-plus="plusHandler"/>
-      <card title="Produto 4" body="Novo card" @plus-plus="plusHandler"/>
+     <div class="productLabel">Produtos disponíveis:</div>
+     {{categories}}
+     <!-- {{products}} -->
+    <div style="display: flex; flex-wrap: wrap; flex-position: center;">
+      <div v-for="p in products" :key="p.id">
+        <card :products="p"
+         :title="p.title" :body="p.description" :categories="p.category" :images="p.image"
+        :price="p.price" />
+      </div>
+      </div>
+        <div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue';
-
+import {
+  computed, defineComponent, reactive, toRefs,
+} from 'vue';
 import Card from '@/components/Card.vue';
+import useCards, { Product } from '@/modules/cards';
 
 export default defineComponent({
   components: {
     Card,
   },
   setup() {
+    const cards = useCards();
     const state = reactive({
       a: 0,
     });
-
-    const plusHandler = (value:number) => {
-      console.log('plus', value);
-      state.a += value;
-    };
+    const products = computed(() => cards.state.products);
+    const myProducts = computed(() => cards.state.myProducts);
+    cards.actions.loadProducts();
+    const categories = computed(() => cards.state.categories);
     return {
       ...toRefs(state),
-      plusHandler,
+      products,
+      myProducts,
     };
   },
 });
 </script>
 <style scoped>
-
+.productLabel{
+  padding: 30px;
+  font-weight: bolder;
+  margin-left: auto;
+}
 </style>
