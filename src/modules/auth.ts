@@ -1,62 +1,65 @@
-import { reactive, readonly } from 'vue';
+import axios from "axios";
+import { reactive, readonly } from "vue";
 
 interface AuthState {
-    id: string,
-    username: string,
-    password: string,
-    token: string,
+  id: string;
+  username: string;
+  password: string;
+  token: string;
 }
 interface AuthMutations {
-    logout: () => boolean;
+  logout: () => boolean;
 }
 interface AuthActions {
-    login: (username: string, password: string) => boolean;
+  login: (username: string, password: string) => boolean;
 }
 interface useAuth {
-    state: AuthState;
-    mutations: AuthMutations;
-    actions: AuthActions;
+  state: AuthState;
+  mutations: AuthMutations;
+  actions: AuthActions;
 }
 
 const state: AuthState = reactive({
-    id: '',
-    username: '',
-    password: '',
-    token: ''
+  id: "",
+  username: "",
+  password: "",
+  token: "teste"
 });
 
 const mutations = {
-    login(id: string, username: string, token: string) {
-        state.token = token;
-        state.id = id;
-        state.username = username;
+  login(id: string, username: string, token: string) {
+    state.token = token;
+    state.id = id;
+    state.username = username;
 
-        return true;
-    },
+    return true;
+  },
 
-    logout() {
-        state.token = '';
-        state.id = '';
-        state.username = '';
-
-        return true;
-    }
+  logout() {
+    state.token = "";
+    state.id = "";
+    state.username = "";
+    return true;
+  }
 };
 
 const actions = {
-    login(username: string, password: string) {
-        console.log('login', username, password);
+  login(username: string, password: string) {
+    console.log("login", username, password);
 
-        mutations.login('id', username, 'superToken');
+    mutations.login("id", username, "superToken");
 
-        return true;
-    }
+    axios.get("https://jsonplaceholder.typicode.com/users").then(res => {
+      console.log("res", res);
+    });
+    return true;
+  }
 };
 
 export default function useAuth(): Readonly<useAuth> {
-    return readonly({
-        state,
-        mutations,
-        actions
-    });
+  return readonly({
+    state,
+    mutations,
+    actions
+  });
 }

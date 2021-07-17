@@ -1,13 +1,41 @@
 <template>
+<div class="root">
   <div class="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">Sobre nós</router-link> |
-     <router-link to="/novo">Meu carrinho</router-link> |
-     <router-link v-if="!isLogedIn" to="/login">Login</router-link>
-     <a  v-else href="#" @click="logout">Logout</a>
+    <div class="centerContainer">
+      <!-- HOME, ABOUT E CARRINO -->
+      <div class="about">
+        <router-link to="/">Sobre nós</router-link>
+      </div>
+      <div class="home">
+        <router-link to="/home">Home</router-link>
+      </div>
+      <div class="cart">
+        <router-link v-if="isLogedIn" to="/novo">Meu carrinho</router-link>
+        <router-link v-if="isLogedIn" to="/novo">
+          <img v-if="isLogedIn" class="cart" src="./assets/kart.svg" />
+        </router-link>
+      </div>
+    </div>
+    <!-- LOGIN / LOGOUT / OLÁ / FAÇA LOGIN P VER OS PRODUTOS -->
+    <div class="flexendContainer">
+      <div class="boasVindas">
+        <a class="ola" v-if="isLogedIn">Olá, {{username}}</a>
+        <a v-else>Faça Login para ver os nossos produtos :)</a>
+      </div>
+      <div class="user">
+        <img src="./assets/user.svg" />
+        <router-link v-if="!isLogedIn" to="/login">Login</router-link>
+        <a v-else href="#" @click="logout">Logout</a>
+      </div>
+    </div>
   </div>
-  <div class="boasvindas" v-if="isLogedIn">Olá,{{username}}</div>
-  <router-view/>
+
+  <div style="flex-grow: 1">
+    <router-view />
+  </div>
+
+  <div class="footer">footer ©</div>
+</div>
 </template>
 
 <script>
@@ -53,34 +81,81 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+.root{
+  display: flex;
+  flex-direction: column;
+  // border: 1px solid green;
+  overflow-x: hidden;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left:0;
+  top:0;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.nav {
-  text-align: end;
-  position: end;
-  // display: flex;
-  // justify-content: flex-end;
-  // justify-content: flex-end;
-  padding: 30px;
-
+.nav{
+  display: flex;
+  justify-content: space-around;
+  background-color: #6666cc;
+  width: 100%;
+  height: 50px;
+  padding: 50px;
   a {
     font-weight: bold;
-    color: #2c3e50;
+    color: white;
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: #ffbf80;
     }
   }
 }
-.boasvindas{
-  align-self: center;
-  margin:10px;
+.centerContainer{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.user{
+  //  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  // justify-content: flex-end;
+  // justify-self: flex-end;
+  // align-self: flex-end;
+}
+.ola{
+  justify-content: baseline;
+  text-justify:center;
+  // height: 10px;
+}
+.boasVindas {
+  margin-right: 10px;
+}
+.about{
+   margin-left: 10px;
+}
+.home{
+  margin-left: 10px;
+}
+.cart {
+  display: flex;
+  align-items: baseline;
+  justify-content: baseline;
+  align-items: center;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.flexendContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.footer{
+  justify-content: flex-end;
+  background-color: #6666cc;
+  color: white;
+  font-weight: bolder;
+  text-align: center;
 }
 
 </style>
